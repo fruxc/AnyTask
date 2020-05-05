@@ -1,0 +1,7 @@
+{
+  "name": "FirebaseAuth",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
