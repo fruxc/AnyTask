@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import Tasks from "./pages/Tasks";
 import { getCurrentUser } from "./firebaseConfig";
 
 /* Core CSS required for Ionic components to work properly */
@@ -27,13 +28,14 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 import { useDispatch } from "react-redux";
-import { setUserState } from "./redux/actions";
+import { setUserState } from "./redux/ActionCreators";
 
 const RoutingSystem: React.FC = () => {
   return (
     <IonReactRouter>
       <IonRouterOutlet>
         <Route path="/home" component={Home} exact={true} />
+        <Route path="/tasks" component={Tasks} exact={true} />
         <Route path="/login" component={Login} exact={true} />
         <Route path="/register" component={Register} exact={true} />
         <Route path="/dashboard" component={Dashboard} exact={true} />
@@ -43,23 +45,22 @@ const RoutingSystem: React.FC = () => {
   );
 };
 const App: React.FC = () => {
-  const [busy, setBusy] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
     getCurrentUser().then((user: any) => {
-      console.log(user);
       if (user) {
         dispatch(setUserState(user.email));
         window.history.replaceState({}, "", "/dashboard");
       } else {
         window.history.replaceState({}, "", "/");
       }
-      setBusy(false);
+      setLoading(false);
     });
   });
 
-  return <IonApp>{busy ? <IonSpinner /> : <RoutingSystem />}</IonApp>;
+  return <IonApp>{loading ? <IonSpinner /> : <RoutingSystem />}</IonApp>;
 };
 
 export default App;

@@ -16,17 +16,22 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { logoutUser } from "../firebaseConfig";
 import { useHistory } from "react-router";
-import { logOutOutline, addCircleSharp } from "ionicons/icons";
+import { logOutOutline } from "ionicons/icons";
 
 const Dashboard: React.FC = () => {
   const username = useSelector((state: any) => state.user.username);
-  const [busy, setBusy] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const history = useHistory();
+
+  function taskCreate() {
+    history.replace("/tasks");
+  }
+
   async function logout() {
-    setBusy(true);
+    setLoading(true);
     await logoutUser();
     history.replace("/");
-    setBusy(false);
+    setLoading(false);
   }
   return (
     <IonPage>
@@ -43,10 +48,12 @@ const Dashboard: React.FC = () => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>{" "}
-      <IonLoading message="Please wait..." duration={1000} isOpen={busy} />
+      <IonLoading message="Please wait..." duration={1000} isOpen={loading} />
       <IonContent className="padding">
         <IonFab horizontal="center" vertical="top" edge={true} slot="fixed">
-          <IonFabButton size="small">+</IonFabButton>
+          <IonFabButton size="small" onClick={taskCreate}>
+            +
+          </IonFabButton>
         </IonFab>
         <p style={{ textAlign: "center", padding: 20 }}>
           Hello {username.split("@")[0]}!<br />

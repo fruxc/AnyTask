@@ -23,11 +23,11 @@ const Register: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [busy, setBusy] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const history = useHistory();
 
   async function Register() {
-    setBusy(true);
+    setLoading(true);
 
     if (
       email.trim() === "" ||
@@ -44,7 +44,7 @@ const Register: React.FC = () => {
       if (res) {
         history.replace("/login");
         Toast("User Registration Success");
-        setBusy(false);
+        setLoading(false);
       }
     }
   }
@@ -59,7 +59,7 @@ const Register: React.FC = () => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>{" "}
-      <IonLoading message="Please wait..." duration={2000} isOpen={busy} />
+      <IonLoading message="Please wait..." duration={2000} isOpen={loading} />
       <IonContent>
         <>
           <IonItem>

@@ -15,19 +15,19 @@ import {
 import React, { useState } from "react";
 import { loginUser } from "../firebaseConfig";
 import { Toast } from "../toast";
-import { setUserState } from "../redux/actions";
+import { setUserState } from "../redux/ActionCreators";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 
 const Login: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [busy, setBusy] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   async function login() {
-    setBusy(true);
+    setLoading(true);
     if (email.trim() === "" || password.trim() === "") {
       Toast("All fields are required!");
     } else {
@@ -36,9 +36,9 @@ const Login: React.FC = () => {
         console.log(res);
         dispatch(setUserState(res.user.email));
         history.replace("/dashboard");
-        Toast("Success logging with credentials");
+        Toast("Login successful with credentials");
       }
-      setBusy(false);
+      setLoading(false);
     }
   }
 
@@ -52,7 +52,7 @@ const Login: React.FC = () => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <IonLoading message="Please wait..." duration={1000} isOpen={busy} />
+      <IonLoading message="Please wait..." duration={1000} isOpen={loading} />
       <IonContent className="padding">
         <IonItem>
           <IonLabel position="floating">Email Address</IonLabel>
