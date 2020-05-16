@@ -43,11 +43,55 @@ export async function loginUser(username: string, password: string) {
   }
 }
 
-export async function registerUser(username: string, password: string) {
+export async function registerUser(
+  username: string,
+  password: string,
+  firstName: string,
+  lastName: string
+) {
   try {
     const res = await firebase
       .auth()
-      .createUserWithEmailAndPassword(username, password);
+      .createUserWithEmailAndPassword(username, password)
+      .then(() => {
+        firebase.firestore().collection("users").doc(username).set({
+          username,
+          firstName,
+          lastName,
+        });
+      });
+    console.log(res);
+    return true;
+  } catch (err) {
+    Toast(err.message);
+    return false;
+  }
+}
+
+export async function uploadTaskToFirebase(
+  title: string,
+  description: string,
+  imagePath: string,
+  username: string
+) {
+  try {
+    let collectionRef = firebase.firestore().collection("tasks");
+    const res = await collectionRef
+      .doc(username)
+      .set({ title, description, imagePath });
+    console.log(res);
+    return true;
+  } catch (err) {
+    Toast(err.message);
+    return false;
+  }
+}
+
+export async function retrieveTask(username: string) {
+  try {
+    let collectionRef = firebase.firestore().collection("tasks");
+    const res = await collectionRef
+      .doc(username).get();
     console.log(res);
     return true;
   } catch (err) {

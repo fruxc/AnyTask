@@ -28,7 +28,6 @@ const Register: React.FC = () => {
 
   async function Register() {
     setLoading(true);
-
     if (
       email.trim() === "" ||
       password.trim() === "" ||
@@ -40,7 +39,8 @@ const Register: React.FC = () => {
     } else if (password !== confirmPassword) {
       Toast("Password Does Not Match");
     } else {
-      const res = await registerUser(email, password);
+      const res = await registerUser(email, password, firstName, lastName);
+      console.log(res);
       if (res) {
         history.replace("/login");
         Toast("User Registration Success");
