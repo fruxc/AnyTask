@@ -2,14 +2,6 @@ import * as firebase from "firebase";
 import { Toast } from "./toast";
 
 const config = {
-  apiKey: "AIzaSyBrdzKjle588Ov2KOryABKYAq0zIZVerZY",
-  authDomain: "fir-auth-27e49.firebaseapp.com",
-  databaseURL: "https://fir-auth-27e49.firebaseio.com",
-  projectId: "fir-auth-27e49",
-  storageBucket: "fir-auth-27e49.appspot.com",
-  messagingSenderId: "46477225929",
-  appId: "1:46477225929:web:dff6512c8e2b0c2f068218",
-  measurementId: "G-RWL3BWW62V",
 };
 
 firebase.initializeApp(config);
