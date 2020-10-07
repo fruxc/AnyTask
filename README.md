@@ -1,5 +1,6 @@
 # AnyTask
-# Any Task is an application to CRUD tasks. Hybrid Application using Ionic Framework.
+## Any Task is an application to create tasks with CRUD operations using Firebase. 
+## Hybrid Application using Ionic Framework.
 
 ## Pull it, Run it.
 
